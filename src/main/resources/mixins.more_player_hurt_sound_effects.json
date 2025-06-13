@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "tallestred.more_player_hurt_sound_effects.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "more_player_hurt_sound_effects.refmap.json",
+  "mixins": [
+    "PlayerMixin",
+    "LivingEntityMixin"
+  ],
+  "client":[
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

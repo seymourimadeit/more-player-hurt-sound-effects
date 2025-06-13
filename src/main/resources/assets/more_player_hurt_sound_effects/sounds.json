@@ -1,0 +1,29 @@
+{
+  "player.hurt.alternative.one": {
+    "sounds": [
+      {
+        "name": "more_player_hurt_sound_effects:player/classic",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.entity.player.hurt"
+  },
+  "player.hurt.alternative.two": {
+    "sounds": [
+      {
+        "name": "more_player_hurt_sound_effects:player/alternative_one",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.entity.player.hurt"
+  },
+  "player.hurt.alternative.three": {
+    "sounds": [
+      {
+        "name": "more_player_hurt_sound_effects:player/alternative_two",
+        "volume": 0.9
+      }
+    ],
+    "subtitle": "subtitles.entity.player.hurt"
+  }
+}
