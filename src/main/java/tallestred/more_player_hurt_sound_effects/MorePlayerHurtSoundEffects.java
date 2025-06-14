@@ -1,5 +1,10 @@
 package tallestred.more_player_hurt_sound_effects;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.OptionsScreen;
+import net.minecraft.client.gui.screens.SkinCustomizationScreen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,7 +43,14 @@ public class MorePlayerHurtSoundEffects {
 
     @SubscribeEvent
     public void onScreenLoad(ScreenEvent.Init.Post event) {
-
+        if (event.getScreen() instanceof OptionsScreen screen) {
+            int width = screen.width;
+            int height = screen.height;
+            Minecraft minecraft = event.getScreen().getMinecraft();;
+            event.addListener(new Button(width / 2 - 155, height / 6 + 48 - 34, 150, 20, Component.translatable("options.hurt_sound_effects.title"), (button) -> {
+                minecraft.setScreen(new HurtSoundConfigScreen());
+            }));
+        }
     }
 }
 

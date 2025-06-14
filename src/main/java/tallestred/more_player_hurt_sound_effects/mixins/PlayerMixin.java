@@ -23,9 +23,6 @@ import tallestred.more_player_hurt_sound_effects.ICustomHurtSound;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity implements ICustomHurtSound {
-
-    @Shadow protected abstract SoundEvent getHurtSound(DamageSource pDamageSource);
-
     private static final EntityDataAccessor<String> CUSTOM_HURT_SOUND = SynchedEntityData.defineId(Player.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Float> CUSTOM_HURT_PITCH = SynchedEntityData.defineId(Player.class, EntityDataSerializers.FLOAT);
 
@@ -39,38 +36,23 @@ public abstract class PlayerMixin extends LivingEntity implements ICustomHurtSou
     }
 
     @Override
-    public void setHurtPitch(float pitch) {
-        this.entityData.set(CUSTOM_HURT_PITCH, pitch);
+    public void setHurtPitch() {
+        this.entityData.set(CUSTOM_HURT_PITCH, Config.COMMON.pitch.get().floatValue());
     }
+    @Override
+    public void setHurtSound() {
+        this.entityData.set(CUSTOM_HURT_SOUND, Config.COMMON.voiceType.get().getSound().toString());
+    }
+
 
     @Override
     public SoundEvent getNewHurtSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(this.entityData.get(CUSTOM_HURT_SOUND)));
     }
 
-    @Inject(at = @At(value = "RETURN"), method = "getHurtSound", cancellable = true)
-    public void hurtSound(DamageSource pDamageSource, CallbackInfoReturnable<SoundEvent> cir) {
-        if (this.getNewHurtSound() == SoundEvents.PLAYER_HURT) {
-            cir.setReturnValue(cir.getReturnValue());
-        }
-        else if (this.getNewHurtSound() != null)
-            cir.setReturnValue(this.getNewHurtSound());
-    }
-
-    @Override
-    public float getVoicePitch() {
-        return this.getHurtPitch();
-    }
-
     @Inject(at = @At(value = "TAIL"), method = "defineSynchedData", cancellable = true)
     public void defineSynchedData(CallbackInfo ci) {
         this.entityData.define(CUSTOM_HURT_SOUND, Config.COMMON.voiceType.get().getSound().toString());
         this.entityData.define(CUSTOM_HURT_PITCH, Config.COMMON.pitch.get().floatValue());
-    }
-
-
-    @Override
-    public void setHurtSound(ResourceLocation location) {
-        this.entityData.set(CUSTOM_HURT_SOUND, Config.COMMON.voiceType.toString());
     }
 }

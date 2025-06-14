@@ -8,8 +8,8 @@ public interface ICustomHurtSound {
 
     SoundEvent getNewHurtSound();
 
-    void setHurtPitch(float pitch);
+    void setHurtPitch();
 
-    void setHurtSound(ResourceLocation location);
+    void setHurtSound();
 
 }
