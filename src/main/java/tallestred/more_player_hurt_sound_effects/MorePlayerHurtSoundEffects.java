@@ -40,24 +40,29 @@ public class MorePlayerHurtSoundEffects {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.COMMON_SPEC);
         Config.loadConfig(Config.COMMON_SPEC, FMLPaths.CONFIGDIR.get().resolve(MODID + "-client.toml").toString());
     }
-
-    @SubscribeEvent
-    public void onScreenLoad(ScreenEvent.Init.Post event) {
-        if (event.getScreen() instanceof OptionsScreen screen) {
-            int width = screen.width;
-            int height = screen.height;
-            Minecraft minecraft = event.getScreen().getMinecraft();;
-            event.addListener(new Button(width / 2 - 155, height / 6 + 48 - 34, 150, 20, Component.translatable("options.hurt_sound_effects.title"), (button) -> {
-                minecraft.setScreen(new HurtSoundConfigScreen());
-            }));
-        }
-    }
 }
 
 @Mod.EventBusSubscriber(modid = MorePlayerHurtSoundEffects.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 class MorePlayerHurtSoundEffectsClientSide {
     @SubscribeEvent
     public static void init(final FMLClientSetupEvent event) {
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new HurtSoundConfigScreen()));
+        MinecraftForge.EVENT_BUS.register(MorePlayerHurtSoundEffectsClientSide.class);
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, screen) -> new HurtSoundConfigScreen(screen)));
+    }
+
+}
+
+@Mod.EventBusSubscriber(modid = MorePlayerHurtSoundEffects.MODID, value = Dist.CLIENT)
+class ScreenEvents {
+    @SubscribeEvent
+    public static void onScreenLoad(ScreenEvent.Init.Post event) {
+        if (event.getScreen() instanceof OptionsScreen screen) {
+            int width = screen.width;
+            int height = screen.height;
+            Minecraft minecraft = event.getScreen().getMinecraft();;
+            event.addListener(new Button(width / 2 - 155, height / 6 + 48 - 34, 150, 20, Component.translatable("options.hurt_sound_effects.title"), (button) -> {
+                minecraft.setScreen(new HurtSoundConfigScreen(screen));
+            }));
+        }
     }
 }

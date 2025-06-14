@@ -16,8 +16,11 @@ import tallestred.more_player_hurt_sound_effects.ICustomHurtSound;
 import tallestred.more_player_hurt_sound_effects.MorePlayerHurtSoundEffects;
 
 public class HurtSoundConfigScreen extends Screen {
-    public HurtSoundConfigScreen() {
+    private Screen lastScreen;
+
+    public HurtSoundConfigScreen(Screen lastScreen) {
         super(Component.translatable("options.hurt_sound_effects.title"));
+        this.lastScreen = lastScreen;
     }
 
     protected void init() {
@@ -51,7 +54,7 @@ public class HurtSoundConfigScreen extends Screen {
             ++i;
         }
         this.addRenderableWidget(new Button(this.width / 2 - 100, this.height / 6 + 24 * (i >> 1), 200, 20, CommonComponents.GUI_DONE, (p_96700_) -> {
-            this.minecraft.setScreen(new TitleScreen(false));
+            this.minecraft.setScreen(this.lastScreen);
         }));
     }
 
