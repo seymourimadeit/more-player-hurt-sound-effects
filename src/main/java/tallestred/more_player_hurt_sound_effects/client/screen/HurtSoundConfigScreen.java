@@ -3,17 +3,14 @@ package tallestred.more_player_hurt_sound_effects.client.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.client.gui.ModListScreen;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 import net.minecraftforge.client.gui.widget.ForgeSlider;
 import net.minecraftforge.registries.ForgeRegistries;
 import tallestred.more_player_hurt_sound_effects.Config;
 import tallestred.more_player_hurt_sound_effects.ICustomHurtSound;
-import tallestred.more_player_hurt_sound_effects.MorePlayerHurtSoundEffects;
 
 public class HurtSoundConfigScreen extends Screen {
     private Screen lastScreen;
@@ -58,6 +55,7 @@ public class HurtSoundConfigScreen extends Screen {
         }));
     }
 
+    @Override
     public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         this.renderBackground(pPoseStack);
         drawCenteredString(pPoseStack, this.font, this.title, this.width / 2, 20, 16777215);
